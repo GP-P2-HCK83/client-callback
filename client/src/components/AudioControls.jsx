@@ -1,4 +1,5 @@
 import { useAudio } from "../contexts/AudioContext";
+import useSweetAlert from "../hooks/useSweetAlert.jsx";
 import "./AudioControls.css";
 
 function AudioControls() {
@@ -11,6 +12,20 @@ function AudioControls() {
     effectsVolume,
     setEffectsVolume,
   } = useAudio();
+
+  const { showVolumeChange } = useSweetAlert();
+
+  const handleMusicVolumeChange = (e) => {
+    const newVolume = parseFloat(e.target.value);
+    setMusicVolume(newVolume);
+    showVolumeChange("music", newVolume);
+  };
+
+  const handleEffectsVolumeChange = (e) => {
+    const newVolume = parseFloat(e.target.value);
+    setEffectsVolume(newVolume);
+    showVolumeChange("effects", newVolume);
+  };
 
   if (!isAudioEnabled) {
     return (
@@ -41,7 +56,7 @@ function AudioControls() {
       </div>
 
       <div className="audio-control-item">
-        <label htmlFor="music-volume">🎵 Music Volume:</label>
+        <label htmlFor="music-volume">🎵 Music Volume:</label>{" "}
         <input
           id="music-volume"
           type="range"
@@ -49,14 +64,14 @@ function AudioControls() {
           max="1"
           step="0.1"
           value={musicVolume}
-          onChange={(e) => setMusicVolume(parseFloat(e.target.value))}
+          onChange={handleMusicVolumeChange}
           className="volume-slider"
         />
         <span className="volume-display">{Math.round(musicVolume * 100)}%</span>
       </div>
 
       <div className="audio-control-item">
-        <label htmlFor="effects-volume">🔊 Effects Volume:</label>
+        <label htmlFor="effects-volume">🔊 Effects Volume:</label>{" "}
         <input
           id="effects-volume"
           type="range"
@@ -64,7 +79,7 @@ function AudioControls() {
           max="1"
           step="0.1"
           value={effectsVolume}
-          onChange={(e) => setEffectsVolume(parseFloat(e.target.value))}
+          onChange={handleEffectsVolumeChange}
           className="volume-slider"
         />
         <span className="volume-display">

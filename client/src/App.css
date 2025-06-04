@@ -1131,3 +1131,146 @@ body {
   text-align: center;
   margin: 1rem 0;
 }
+
+/* SweetAlert2 Custom Styles for Game Theme */
+.game-swal-popup {
+  background: var(--card-bg) !important;
+  border: 1px solid var(--card-border) !important;
+  border-radius: 15px !important;
+  backdrop-filter: blur(10px) !important;
+  color: var(--text-primary) !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3) !important;
+}
+
+.game-swal-title {
+  color: var(--text-primary) !important;
+  font-family: inherit !important;
+  font-weight: bold !important;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2) !important;
+}
+
+.game-swal-content {
+  color: var(--text-primary) !important;
+  font-family: inherit !important;
+}
+
+.game-swal-confirm-btn {
+  background: linear-gradient(45deg, #4caf50, #45a049) !important;
+  border: none !important;
+  border-radius: 25px !important;
+  padding: 12px 24px !important;
+  font-weight: bold !important;
+  transition: all 0.3s ease !important;
+  box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3) !important;
+}
+
+.game-swal-confirm-btn:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4) !important;
+}
+
+.game-swal-cancel-btn {
+  background: linear-gradient(45deg, #f44336, #d32f2f) !important;
+  border: none !important;
+  border-radius: 25px !important;
+  padding: 12px 24px !important;
+  font-weight: bold !important;
+  transition: all 0.3s ease !important;
+  box-shadow: 0 4px 15px rgba(244, 67, 54, 0.3) !important;
+}
+
+.game-swal-cancel-btn:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 6px 20px rgba(244, 67, 54, 0.4) !important;
+}
+
+/* Custom Game Event Alert Styles */
+.game-event-alert {
+  text-align: center;
+  padding: 1rem;
+}
+
+.game-event-icon {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+  animation: bounceIn 0.6s ease-out;
+}
+
+.game-event-title {
+  margin: 0.5rem 0;
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: var(--text-primary);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.game-event-text {
+  margin: 0.5rem 0 0 0;
+  font-size: 1rem;
+  color: var(--text-secondary);
+}
+
+/* Toast positioning for game events */
+.swal2-toast.swal2-show {
+  background: var(--card-bg) !important;
+  border: 1px solid var(--card-border) !important;
+  border-radius: 10px !important;
+  backdrop-filter: blur(10px) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2) !important;
+}
+
+.swal2-toast .swal2-title {
+  color: var(--text-primary) !important;
+  font-size: 1rem !important;
+  margin: 0 !important;
+}
+
+.swal2-toast .swal2-content {
+  color: var(--text-secondary) !important;
+  font-size: 0.9rem !important;
+  margin: 0 !important;
+}
+
+/* Progress bar styling */
+.swal2-timer-progress-bar {
+  background: linear-gradient(45deg, #4caf50, #45a049) !important;
+  height: 4px !important;
+}
+
+/* Dark theme adjustments */
+[data-theme="dark"] .game-swal-popup {
+  background: var(--card-bg) !important;
+  color: var(--text-primary) !important;
+}
+
+[data-theme="dark"] .swal2-toast.swal2-show {
+  background: var(--card-bg) !important;
+  border-color: var(--card-border) !important;
+}
+
+/* Animation for bouncing icons */
+@keyframes bounceIn {
+  0% {
+    transform: scale(0.3);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  70% {
+    transform: scale(0.9);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* SweetAlert2 overlay customization */
+.swal2-container {
+  backdrop-filter: blur(5px) !important;
+}
+
+.swal2-backdrop-show {
+  background: rgba(0, 0, 0, 0.5) !important;
+}
