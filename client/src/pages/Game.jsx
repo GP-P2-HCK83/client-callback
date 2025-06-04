@@ -145,6 +145,9 @@ function Game({
   const renderBoard = () => {
     const board = [];
 
+    // Get current player's position
+    const currentPlayerPosition = currentPlayer ? players[currentPlayer]?.position : null;
+
     for (let row = 9; row >= 0; row--) {
       const boardRow = [];
       const isEvenRow = row % 2 === 0;
@@ -172,6 +175,11 @@ function Game({
           const player = playersOnCell[0];
           cellClass += ` player${player.playerNumber}`;
           cellContent = `P${player.playerNumber}`;
+        }
+
+        // Add active-player class if this is the current player's position
+        if (cellNumber === currentPlayerPosition) {
+          cellClass += " active-player";
         }
 
         // Check for snakes and ladders
@@ -235,18 +243,35 @@ function Game({
       // For current user, use the name they entered
       displayName = playerName || `Player ${player.playerNumber}`;
     } else {
-      // For other players, use server data if available
-      displayName = playerNames[playerId] || `Player ${player.playerNumber}`;
+      // For other players, try multiple sources for the name
+      displayName =
+        playerNames?.[playerId] ||           // From playerNames state
+        player.name ||                       // From player object name property
+        player.playerName ||                 // From player object playerName property
+        `Player ${player.playerNumber}`;     // Fallback to player number
     }
 
+    // Build CSS classes
+    let playerClass = "player";
+    
+    // Add active class if this is the current player
+    if (currentPlayer === playerId) {
+      playerClass += " active";
+    }
+    
+    // Add your-player class if this is you
+    if (yourPlayerId === playerId) {
+      playerClass += " your-player";
+    }
+    
+    // Add player number class for color matching
+    playerClass += ` player${player.playerNumber}`;
+
     return (
-      <div
-        className={`player ${currentPlayer === playerId ? "active" : ""} ${
-          yourPlayerId === playerId ? "your-player" : ""
-        }`}
-      >
+      <div className={playerClass}>
         <span>
-          {displayName} {yourPlayerId === playerId ? "(You)" : ""}
+          {displayName}{" "}
+          {yourPlayerId === playerId ? "(You)" : ""}
         </span>
         <span>Position: {player.position}</span>
       </div>

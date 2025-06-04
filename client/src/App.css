@@ -112,12 +112,214 @@ body {
   background: var(--card-bg);
   border: 1px solid var(--card-border);
   transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
 }
 
+/* Default active player styling */
 .player.active {
-  background: rgba(255, 255, 255, 0.3);
-  box-shadow: 0 0 20px var(--shadow-color);
+  background: linear-gradient(
+    135deg,
+    rgba(76, 175, 80, 0.3),
+    rgba(76, 175, 80, 0.1)
+  );
+  border: 2px solid #4caf50;
+  padding-top: 2rem;
+  box-shadow: 0 0 25px rgba(76, 175, 80, 0.4), 0 0 50px rgba(76, 175, 80, 0.2);
   transform: scale(1.05);
+  animation: activePlayerGlow 2s ease-in-out infinite;
+}
+
+/* Player 1 active styling (red/orange theme) */
+.player.active.player1 {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 107, 107, 0.4),
+    rgba(238, 90, 82, 0.2)
+  );
+  border: 2px solid #ff6b6b;
+  box-shadow: 0 0 25px rgba(255, 107, 107, 0.5),
+    0 0 50px rgba(255, 107, 107, 0.3);
+  animation: activePlayer1Glow 2s ease-in-out infinite;
+}
+
+/* Player 2 active styling (teal/cyan theme) */
+.player.active.player2 {
+  background: linear-gradient(
+    135deg,
+    rgba(78, 205, 196, 0.4),
+    rgba(68, 160, 141, 0.2)
+  );
+  border: 2px solid #4ecdc4;
+  box-shadow: 0 0 25px rgba(78, 205, 196, 0.5), 0 0 50px rgba(78, 205, 196, 0.3);
+  animation: activePlayer2Glow 2s ease-in-out infinite;
+}
+
+/* Special styling for when it's your turn */
+.player.active.your-player {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 193, 7, 0.4),
+    rgba(255, 179, 0, 0.2)
+  );
+  border: 2px solid #ffc107;
+  box-shadow: 0 0 25px rgba(255, 193, 7, 0.5), 0 0 50px rgba(255, 193, 7, 0.3);
+  animation: yourTurnGlow 2s ease-in-out infinite;
+}
+
+/* Combined styling for your turn + player color */
+.player.active.your-player.player1 {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 107, 107, 0.5),
+    rgba(255, 193, 7, 0.3)
+  );
+  border: 2px solid #ff6b6b;
+  box-shadow: 0 0 25px rgba(255, 107, 107, 0.6), 0 0 50px rgba(255, 193, 7, 0.4);
+  animation: yourTurnPlayer1Glow 2s ease-in-out infinite;
+}
+
+.player.active.your-player.player2 {
+  background: linear-gradient(
+    135deg,
+    rgba(78, 205, 196, 0.5),
+    rgba(255, 193, 7, 0.3)
+  );
+  border: 2px solid #4ecdc4;
+  box-shadow: 0 0 25px rgba(78, 205, 196, 0.6), 0 0 50px rgba(255, 193, 7, 0.4);
+  animation: yourTurnPlayer2Glow 2s ease-in-out infinite;
+}
+
+/* Animation keyframes */
+@keyframes activePlayerGlow {
+  0%,
+  100% {
+    box-shadow: 0 0 25px rgba(76, 175, 80, 0.4), 0 0 50px rgba(76, 175, 80, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 35px rgba(76, 175, 80, 0.6), 0 0 70px rgba(76, 175, 80, 0.3);
+  }
+}
+
+@keyframes activePlayer1Glow {
+  0%,
+  100% {
+    box-shadow: 0 0 25px rgba(255, 107, 107, 0.5),
+      0 0 50px rgba(255, 107, 107, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 35px rgba(255, 107, 107, 0.7),
+      0 0 70px rgba(255, 107, 107, 0.4);
+  }
+}
+
+@keyframes activePlayer2Glow {
+  0%,
+  100% {
+    box-shadow: 0 0 25px rgba(78, 205, 196, 0.5),
+      0 0 50px rgba(78, 205, 196, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 35px rgba(78, 205, 196, 0.7),
+      0 0 70px rgba(78, 205, 196, 0.4);
+  }
+}
+
+@keyframes yourTurnGlow {
+  0%,
+  100% {
+    box-shadow: 0 0 25px rgba(255, 193, 7, 0.5), 0 0 50px rgba(255, 193, 7, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 35px rgba(255, 193, 7, 0.7), 0 0 70px rgba(255, 193, 7, 0.4);
+  }
+}
+
+@keyframes yourTurnPlayer1Glow {
+  0%,
+  100% {
+    box-shadow: 0 0 25px rgba(255, 107, 107, 0.6),
+      0 0 50px rgba(255, 193, 7, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 35px rgba(255, 107, 107, 0.8),
+      0 0 70px rgba(255, 193, 7, 0.5);
+  }
+}
+
+@keyframes yourTurnPlayer2Glow {
+  0%,
+  100% {
+    box-shadow: 0 0 25px rgba(78, 205, 196, 0.6),
+      0 0 50px rgba(255, 193, 7, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 35px rgba(78, 205, 196, 0.8),
+      0 0 70px rgba(255, 193, 7, 0.5);
+  }
+}
+
+/* Add turn indicator labels */
+.player.active::before {
+  content: "ACTIVE TURN";
+  position: absolute;
+  top: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #4caf50;
+  color: white;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 0.7rem;
+  font-weight: bold;
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 8px rgba(76, 175, 80, 0.3);
+  animation: fadeInScale 0.3s ease-out;
+  z-index: 10;
+}
+
+.player.active.player1::before {
+  background: #ff6b6b;
+  box-shadow: 0 2px 8px rgba(255, 107, 107, 0.3);
+}
+
+.player.active.player2::before {
+  background: #4ecdc4;
+  box-shadow: 0 2px 8px rgba(78, 205, 196, 0.3);
+}
+
+.player.active.your-player::before {
+  content: "YOUR TURN";
+  background: #ffc107;
+  color: #333;
+  box-shadow: 0 2px 8px rgba(255, 193, 7, 0.3);
+}
+
+.player.active.your-player.player1::before {
+  background: linear-gradient(45deg, #ff6b6b, #ffc107);
+  color: white;
+}
+
+.player.active.your-player.player2::before {
+  background: linear-gradient(45deg, #4ecdc4, #ffc107);
+  color: white;
+}
+
+@keyframes fadeInScale {
+  0% {
+    opacity: 0;
+    transform: translateX(-50%) scale(0.8);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(-50%) scale(1);
+  }
+}
+
+/* Enhanced player text styling when active */
+.player.active span {
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  font-weight: bold;
 }
 
 .dice-section {
@@ -312,36 +514,82 @@ body {
   animation: playerLand 0.4s ease-out;
 }
 
-.cell.snake {
-  background: linear-gradient(
-    45deg,
-    rgba(255, 154, 158, 0.3),
-    rgba(254, 207, 239, 0.3)
-  );
-  position: relative;
-  border: 2px solid #ff6b6b;
-  transition: all 0.3s ease;
+/* Active player breathing animation */
+.cell.player1.active-player {
+  animation: breathePlayer1 2s ease-in-out infinite;
 }
 
-.cell.snake:hover {
-  transform: scale(1.05);
-  box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+.cell.player2.active-player {
+  animation: breathePlayer2 2s ease-in-out infinite;
 }
 
-.cell.ladder {
-  background: linear-gradient(
-    45deg,
-    rgba(168, 237, 234, 0.3),
-    rgba(254, 214, 227, 0.3)
-  );
-  position: relative;
-  border: 2px solid #4ecdc4;
-  transition: all 0.3s ease;
+.cell.both-players.active-player {
+  animation: breatheBothPlayers 2s ease-in-out infinite;
 }
 
-.cell.ladder:hover {
-  transform: scale(1.05);
-  box-shadow: 0 4px 15px rgba(78, 205, 196, 0.4);
+@keyframes breathePlayer1 {
+  0%,
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 15px rgba(255, 107, 107, 0.6),
+      0 0 30px rgba(255, 107, 107, 0.4), 0 0 45px rgba(255, 107, 107, 0.2);
+    filter: brightness(1);
+  }
+  50% {
+    transform: scale(1.08);
+    box-shadow: 0 0 25px rgba(255, 107, 107, 0.8),
+      0 0 50px rgba(255, 107, 107, 0.6), 0 0 75px rgba(255, 107, 107, 0.4);
+    filter: brightness(1.2);
+  }
+}
+
+@keyframes breathePlayer2 {
+  0%,
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 15px rgba(78, 205, 196, 0.6),
+      0 0 30px rgba(78, 205, 196, 0.4), 0 0 45px rgba(78, 205, 196, 0.2);
+    filter: brightness(1);
+  }
+  50% {
+    transform: scale(1.1);
+    box-shadow: 0 0 25px rgba(78, 205, 196, 0.8),
+      0 0 50px rgba(78, 205, 196, 0.6), 0 0 75px rgba(78, 205, 196, 0.4);
+    filter: brightness(1.2);
+  }
+}
+
+@keyframes breatheBothPlayers {
+  0%,
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 15px rgba(255, 107, 107, 0.4),
+      0 0 30px rgba(78, 205, 196, 0.4), 0 0 45px rgba(255, 107, 107, 0.2);
+    filter: brightness(1);
+  }
+  50% {
+    transform: scale(1.1);
+    box-shadow: 0 0 25px rgba(255, 107, 107, 0.6),
+      0 0 50px rgba(78, 205, 196, 0.6), 0 0 75px rgba(255, 107, 107, 0.4);
+    filter: brightness(1.2);
+  }
+}
+
+/* Ensure breathing animation takes priority over hover effects */
+.cell.active-player:hover {
+  animation: none;
+}
+
+.cell.player1.active-player:hover {
+  animation: breathePlayer1 2s ease-in-out infinite;
+}
+
+.cell.player2.active-player:hover {
+  animation: breathePlayer2 2s ease-in-out infinite;
+}
+
+.cell.both-players.active-player:hover {
+  animation: breatheBothPlayers 2s ease-in-out infinite;
 }
 
 .game-rules {
