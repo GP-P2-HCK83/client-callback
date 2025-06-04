@@ -54,7 +54,7 @@ function App() {
 
   useEffect(() => {
     // Initialize socket connection
-    const newSocket = io("http://localhost:3001");
+    const newSocket = io("https://api.stevenong.site");
     setSocket(newSocket);
 
     newSocket.on("connect", () => {
