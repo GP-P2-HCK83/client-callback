@@ -150,11 +150,21 @@ body {
 }
 
 @keyframes diceRoll {
-  0% { transform: rotate(0deg); }
-  25% { transform: rotate(90deg); }
-  50% { transform: rotate(180deg); }
-  75% { transform: rotate(270deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(90deg);
+  }
+  50% {
+    transform: rotate(180deg);
+  }
+  75% {
+    transform: rotate(270deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 .roll-button {
@@ -483,8 +493,12 @@ body {
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 .back-button,
@@ -580,22 +594,244 @@ body {
   transition: all 0.3s ease;
 }
 
+/* Audio Controls Styles */
+.audio-controls {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 15px;
+  backdrop-filter: blur(10px);
+  min-width: 280px;
+  transition: all 0.3s ease;
+}
+
+.audio-controls-header {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.audio-controls-header h4 {
+  margin: 0;
+  color: var(--text-primary);
+  font-size: 1.1rem;
+}
+
+.audio-control-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 1rem 0;
+  gap: 0.5rem;
+}
+
+.music-toggle {
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: bold;
+  background: linear-gradient(45deg, #9b59b6, #8e44ad);
+  color: white;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 150px;
+}
+
+.music-toggle:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(155, 89, 182, 0.3);
+}
+
+.music-toggle.playing {
+  background: linear-gradient(45deg, #e74c3c, #c0392b);
+}
+
+.music-toggle.paused {
+  background: linear-gradient(45deg, #27ae60, #229954);
+}
+
+.volume-slider {
+  flex: 1;
+  margin: 0 0.5rem;
+  height: 6px;
+  background: var(--bg-secondary);
+  border-radius: 3px;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.volume-slider::-webkit-slider-thumb {
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  background: linear-gradient(45deg, #3498db, #2980b9);
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(52, 152, 219, 0.3);
+  transition: all 0.3s ease;
+}
+
+.volume-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+  box-shadow: 0 4px 12px rgba(52, 152, 219, 0.5);
+}
+
+.volume-slider::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  background: linear-gradient(45deg, #3498db, #2980b9);
+  border-radius: 50%;
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 2px 8px rgba(52, 152, 219, 0.3);
+  transition: all 0.3s ease;
+}
+
+.volume-display {
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: var(--text-primary);
+  min-width: 40px;
+  text-align: right;
+}
+
+.audio-control-item label {
+  font-size: 0.9rem;
+  color: var(--text-primary);
+  min-width: 100px;
+}
+
+/* Enhanced dice animation with sound sync */
+.dice.rolling {
+  animation: diceRollWithSound 0.1s infinite;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4),
+    inset 0 2px 4px rgba(255, 255, 255, 0.5), 0 0 20px rgba(255, 255, 255, 0.3);
+}
+
+@keyframes diceRollWithSound {
+  0% {
+    transform: rotate(0deg) scale(1);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+  }
+  25% {
+    transform: rotate(90deg) scale(1.1);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+  }
+  50% {
+    transform: rotate(180deg) scale(1);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+  }
+  75% {
+    transform: rotate(270deg) scale(1.1);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+  }
+  100% {
+    transform: rotate(360deg) scale(1);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+  }
+}
+
+/* Audio feedback animations */
+.cell.snake:hover {
+  animation: snakeHiss 0.5s ease-in-out;
+}
+
+.cell.ladder:hover {
+  animation: ladderClimb 0.5s ease-in-out;
+}
+
+@keyframes snakeHiss {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  25% {
+    transform: scale(1.05) rotate(-1deg);
+  }
+  75% {
+    transform: scale(1.05) rotate(1deg);
+  }
+}
+
+@keyframes ladderClimb {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1) translateY(-2px);
+  }
+}
+
+/* Victory celebration animation */
+.winner-announcement {
+  animation: victoryPulse 2s ease-in-out infinite;
+}
+
+@keyframes victoryPulse {
+  0%,
+  100% {
+    transform: scale(1);
+    box-shadow: 0 4px 20px rgba(76, 175, 80, 0.3);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 8px 30px rgba(76, 175, 80, 0.5);
+  }
+}
+
+/* Responsive audio controls */
+@media (max-width: 768px) {
+  .audio-controls {
+    margin-top: 1rem;
+    padding: 1rem;
+    min-width: auto;
+    width: 100%;
+  }
+
+  .audio-control-item {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.5rem;
+  }
+
+  .audio-control-item label {
+    min-width: auto;
+    text-align: center;
+  }
+
+  .volume-slider {
+    margin: 0.5rem 0;
+  }
+
+  .volume-display {
+    text-align: center;
+    min-width: auto;
+  }
+
+  .music-toggle {
+    min-width: auto;
+    width: 100%;
+  }
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
   .theme-toggle-container {
     top: 1rem;
     right: 1rem;
   }
-  
+
   .theme-toggle {
     padding: 0.5rem;
     font-size: 0.9rem;
   }
-  
+
   .theme-toggle-text {
     display: none;
   }
-  
+
   .game-container {
     padding: 1rem;
   }

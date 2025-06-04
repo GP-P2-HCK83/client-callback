@@ -3,6 +3,7 @@ import io from "socket.io-client";
 import Login from "./pages/Login.jsx";
 import Game from "./pages/Game.jsx";
 import { ThemeProvider } from "./contexts/ThemeContext.jsx";
+import { AudioProvider } from "./contexts/AudioContext.jsx";
 import "./App.css";
 
 function AppContent() {
@@ -236,7 +237,9 @@ function AppContent() {
 function App() {
   return (
     <ThemeProvider>
-      <AppContent />
+      <AudioProvider>
+        <AppContent />
+      </AudioProvider>
     </ThemeProvider>
   );
 }
