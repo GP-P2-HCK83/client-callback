@@ -312,36 +312,88 @@ body {
   animation: playerLand 0.4s ease-out;
 }
 
-.cell.snake {
-  background: linear-gradient(
-    45deg,
-    rgba(255, 154, 158, 0.3),
-    rgba(254, 207, 239, 0.3)
-  );
-  position: relative;
-  border: 2px solid #ff6b6b;
-  transition: all 0.3s ease;
+/* Active player breathing animation */
+.cell.player1.active-player {
+  animation: breathePlayer1 2s ease-in-out infinite;
 }
 
-.cell.snake:hover {
-  transform: scale(1.05);
-  box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+.cell.player2.active-player {
+  animation: breathePlayer2 2s ease-in-out infinite;
 }
 
-.cell.ladder {
-  background: linear-gradient(
-    45deg,
-    rgba(168, 237, 234, 0.3),
-    rgba(254, 214, 227, 0.3)
-  );
-  position: relative;
-  border: 2px solid #4ecdc4;
-  transition: all 0.3s ease;
+.cell.both-players.active-player {
+  animation: breatheBothPlayers 2s ease-in-out infinite;
 }
 
-.cell.ladder:hover {
-  transform: scale(1.05);
-  box-shadow: 0 4px 15px rgba(78, 205, 196, 0.4);
+@keyframes breathePlayer1 {
+  0%,
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 15px rgba(255, 107, 107, 0.6),
+                0 0 30px rgba(255, 107, 107, 0.4),
+                0 0 45px rgba(255, 107, 107, 0.2);
+    filter: brightness(1);
+  }
+  50% {
+    transform: scale(1.08);
+    box-shadow: 0 0 25px rgba(255, 107, 107, 0.8),
+                0 0 50px rgba(255, 107, 107, 0.6),
+                0 0 75px rgba(255, 107, 107, 0.4);
+    filter: brightness(1.2);
+  }
+}
+
+@keyframes breathePlayer2 {
+  0%,
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 15px rgba(78, 205, 196, 0.6),
+                0 0 30px rgba(78, 205, 196, 0.4),
+                0 0 45px rgba(78, 205, 196, 0.2);
+    filter: brightness(1);
+  }
+  50% {
+    transform: scale(1.1);
+    box-shadow: 0 0 25px rgba(78, 205, 196, 0.8),
+                0 0 50px rgba(78, 205, 196, 0.6),
+                0 0 75px rgba(78, 205, 196, 0.4);
+    filter: brightness(1.2);
+  }
+}
+
+@keyframes breatheBothPlayers {
+  0%,
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 15px rgba(255, 107, 107, 0.4),
+                0 0 30px rgba(78, 205, 196, 0.4),
+                0 0 45px rgba(255, 107, 107, 0.2);
+    filter: brightness(1);
+  }
+  50% {
+    transform: scale(1.1);
+    box-shadow: 0 0 25px rgba(255, 107, 107, 0.6),
+                0 0 50px rgba(78, 205, 196, 0.6),
+                0 0 75px rgba(255, 107, 107, 0.4);
+    filter: brightness(1.2);
+  }
+}
+
+/* Ensure breathing animation takes priority over hover effects */
+.cell.active-player:hover {
+  animation: none;
+}
+
+.cell.player1.active-player:hover {
+  animation: breathePlayer1 2s ease-in-out infinite;
+}
+
+.cell.player2.active-player:hover {
+  animation: breathePlayer2 2s ease-in-out infinite;
+}
+
+.cell.both-players.active-player:hover {
+  animation: breatheBothPlayers 2s ease-in-out infinite;
 }
 
 .game-rules {

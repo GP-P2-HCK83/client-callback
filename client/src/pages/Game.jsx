@@ -145,6 +145,9 @@ function Game({
   const renderBoard = () => {
     const board = [];
 
+    // Get current player's position
+    const currentPlayerPosition = currentPlayer ? players[currentPlayer]?.position : null;
+
     for (let row = 9; row >= 0; row--) {
       const boardRow = [];
       const isEvenRow = row % 2 === 0;
@@ -172,6 +175,11 @@ function Game({
           const player = playersOnCell[0];
           cellClass += ` player${player.playerNumber}`;
           cellContent = `P${player.playerNumber}`;
+        }
+
+        // Add active-player class if this is the current player's position
+        if (cellNumber === currentPlayerPosition) {
+          cellClass += " active-player";
         }
 
         // Check for snakes and ladders
