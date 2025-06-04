@@ -2,9 +2,10 @@ import { useState, useEffect } from "react";
 import io from "socket.io-client";
 import Login from "./pages/Login.jsx";
 import Game from "./pages/Game.jsx";
+import { ThemeProvider } from "./contexts/ThemeContext.jsx";
 import "./App.css";
 
-function App() {
+function AppContent() {
   // Socket and connection states
   const [socket, setSocket] = useState(null);
   const [isConnected, setIsConnected] = useState(false);
@@ -229,6 +230,14 @@ function App() {
       onResetGame={resetGame}
       onBackToMenu={backToMenu}
     />
+  );
+}
+
+function App() {
+  return (
+    <ThemeProvider>
+      <AppContent />
+    </ThemeProvider>
   );
 }
 

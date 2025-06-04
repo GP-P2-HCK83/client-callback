@@ -1,4 +1,5 @@
 import { useState } from "react";
+import ThemeToggle from "../components/ThemeToggle.jsx";
 // import "./Login.css";
 
 function Login({ isConnected, connectionStatus, onJoinQueue }) {
@@ -16,6 +17,9 @@ function Login({ isConnected, connectionStatus, onJoinQueue }) {
 
   return (
     <div className="game-container">
+      <div className="theme-toggle-container">
+        <ThemeToggle />
+      </div>
       <h1>🐍 Callback Climb 🪜</h1>
       <div className="menu-container">
         <div className="connection-status">Status: {connectionStatus}</div>

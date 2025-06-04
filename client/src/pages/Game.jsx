@@ -1,4 +1,5 @@
 import { SnakeIcon, LadderIcon } from "../GameIcons.jsx";
+import ThemeToggle from "../components/ThemeToggle.jsx";
 // import "./Game.css";
 
 function Game({
@@ -177,10 +178,8 @@ function Game({
       // For current user, use the name they entered
       displayName = playerName || `Player ${player.playerNumber}`;
     } else {
-      // For other players, check if we have their name from server data
-      displayName = playerNames?.[playerId] || 
-                    player.name || // Check if player object has name property
-                    `Opponent`; // Fallback to "Opponent"
+      // For other players, use server data if available
+      displayName = playerNames[playerId] || `Player ${player.playerNumber}`;
     }
 
     return (
@@ -202,6 +201,9 @@ function Game({
   if (gameStatus === "waiting") {
     return (
       <div className="game-container">
+        <div className="theme-toggle-container">
+          <ThemeToggle />
+        </div>
         <h1>🐍 Callback Climb 🪜</h1>
         <div className="waiting-container">
           <div className="waiting-message">
@@ -220,6 +222,9 @@ function Game({
   // Game Screen
   return (
     <div className="game-container">
+      <div className="theme-toggle-container">
+        <ThemeToggle />
+      </div>
       <h1>🐍 Callback Climb 🪜</h1>
       <div className="game-info">
         <div className="player-info">
