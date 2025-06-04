@@ -1,10 +1,12 @@
 import { useState } from "react";
 import ThemeToggle from "../components/ThemeToggle.jsx";
-// import "./Login.css";
+import AudioControls from "../components/AudioControls.jsx";
+import { useAudio } from "../contexts/AudioContext.jsx";
 
 function Login({ isConnected, connectionStatus, onJoinQueue }) {
   const [playerName, setPlayerName] = useState("");
   const [selectedDifficulty, setSelectedDifficulty] = useState("moderate");
+  const { enableAudio, startBackgroundMusic, playSound } = useAudio();
 
   const handleJoinQueue = () => {
     if (!playerName.trim()) {
@@ -12,7 +14,21 @@ function Login({ isConnected, connectionStatus, onJoinQueue }) {
       return;
     }
 
+    // Enable audio on first user interaction
+    enableAudio();
+
+    // Play game start sound and start background music
+    playSound("gameStart");
+    setTimeout(() => {
+      startBackgroundMusic();
+    }, 500);
+
     onJoinQueue(playerName, selectedDifficulty);
+  };
+
+  const handleInputClick = () => {
+    // Enable audio when user interacts with any input
+    enableAudio();
   };
 
   return (
@@ -30,6 +46,7 @@ function Login({ isConnected, connectionStatus, onJoinQueue }) {
             value={playerName}
             onChange={(e) => setPlayerName(e.target.value)}
             onKeyPress={(e) => e.key === "Enter" && handleJoinQueue()}
+            onClick={handleInputClick}
             className="player-name-input"
           />
           <div className="difficulty-selection">
@@ -38,6 +55,7 @@ function Login({ isConnected, connectionStatus, onJoinQueue }) {
               id="difficulty"
               value={selectedDifficulty}
               onChange={(e) => setSelectedDifficulty(e.target.value)}
+              onClick={handleInputClick}
               className="difficulty-select"
             >
               <option value="easy">Easy (12 ladders, 5 snakes)</option>
@@ -53,6 +71,7 @@ function Login({ isConnected, connectionStatus, onJoinQueue }) {
             {isConnected ? "Find Game" : "Connecting..."}
           </button>
         </div>
+        <AudioControls />
       </div>
     </div>
   );

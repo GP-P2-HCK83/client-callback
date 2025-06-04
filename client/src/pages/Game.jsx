@@ -1,6 +1,8 @@
+import { useEffect } from "react";
 import { SnakeIcon, LadderIcon } from "../GameIcons.jsx";
 import ThemeToggle from "../components/ThemeToggle.jsx";
-// import "./Game.css";
+import AudioControls from "../components/AudioControls.jsx";
+import { useAudio } from "../contexts/AudioContext.jsx";
 
 function Game({
   gameStatus,
@@ -10,14 +12,16 @@ function Game({
   winner,
   isRolling,
   yourPlayerId,
-  playerName, // Your player name
-  playerNames, // All player names from server
+  playerName,
+  playerNames,
   gameBoard,
   gameDifficulty,
   onRollDice,
   onResetGame,
   onBackToMenu,
 }) {
+  const { playSound, enableAudio } = useAudio();
+
   // Default/fallback snakes and ladders positions
   const defaultSnakes = {
     16: 6,
@@ -47,6 +51,59 @@ function Game({
   // Get current board (dynamic if available, fallback to default)
   const currentSnakes = gameBoard?.snakes || defaultSnakes;
   const currentLadders = gameBoard?.ladders || defaultLadders;
+
+  // Play sound effects when certain game events occur
+  useEffect(() => {
+    if (gameStatus === "won" && winner) {
+      // Play victory sound
+      setTimeout(() => {
+        if (winner === yourPlayerId) {
+          playSound("victory");
+        }
+      }, 500);
+    }
+  }, [gameStatus, winner, yourPlayerId, playSound]);
+
+  // Track player position changes for ladder/snake sounds
+  useEffect(() => {
+    if (!players[yourPlayerId]) return;
+
+    const currentPosition = players[yourPlayerId].position;
+
+    // Check if player landed on a ladder
+    if (currentLadders[currentPosition]) {
+      setTimeout(() => {
+        playSound("ladder");
+      }, 800); // Delay to let dice animation finish
+    }
+
+    // Check if player landed on a snake
+    if (currentSnakes[currentPosition]) {
+      setTimeout(() => {
+        playSound("snake");
+      }, 800); // Delay to let dice animation finish
+    }
+  }, [players, yourPlayerId, currentLadders, currentSnakes, playSound]);
+
+  const handleRollDice = () => {
+    // Enable audio if not already enabled
+    enableAudio();
+
+    // Play dice roll sound
+    playSound("diceRoll");
+
+    // Call the original roll dice function
+    onRollDice();
+  };
+
+  const handleResetGame = () => {
+    playSound("gameStart");
+    onResetGame();
+  };
+
+  const handleBackToMenu = () => {
+    onBackToMenu();
+  };
 
   // Function to generate random border color
   const getRandomBorderColor = () => {
@@ -189,8 +246,7 @@ function Game({
         }`}
       >
         <span>
-          {displayName}{" "}
-          {yourPlayerId === playerId ? "(You)" : ""}
+          {displayName} {yourPlayerId === playerId ? "(You)" : ""}
         </span>
         <span>Position: {player.position}</span>
       </div>
@@ -211,9 +267,10 @@ function Game({
             <h2>Hello {playerName}! Waiting for an opponent...</h2>
             <p>You'll be matched automatically when another player joins!</p>
           </div>
-          <button onClick={onBackToMenu} className="back-button">
+          <button onClick={handleBackToMenu} className="back-button">
             Back to Menu
           </button>
+          <AudioControls />
         </div>
       </div>
     );
@@ -253,7 +310,7 @@ function Game({
             {diceValue}
           </div>
           <button
-            onClick={onRollDice}
+            onClick={handleRollDice}
             disabled={
               gameStatus === "won" ||
               isRolling ||
@@ -276,19 +333,20 @@ function Game({
             ? "You Win!"
             : "Opponent Wins!"}{" "}
           🎉
-          <button onClick={onResetGame} className="reset-button">
+          <button onClick={handleResetGame} className="reset-button">
             Play Again
           </button>
-          <button onClick={onBackToMenu} className="menu-button">
+          <button onClick={handleBackToMenu} className="menu-button">
             Back to Menu
           </button>
         </div>
       )}
       <div className="board">{renderBoard()}</div>
       <div className="game-controls">
-        <button onClick={onBackToMenu} className="leave-button">
+        <button onClick={handleBackToMenu} className="leave-button">
           Leave Game
         </button>
+        <AudioControls />
       </div>
       <div className="game-rules">
         <h3>🎮 Enhanced Game Rules:</h3>
