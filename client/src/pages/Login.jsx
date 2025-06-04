@@ -2,15 +2,16 @@ import { useState } from "react";
 import ThemeToggle from "../components/ThemeToggle.jsx";
 import AudioControls from "../components/AudioControls.jsx";
 import { useAudio } from "../contexts/AudioContext.jsx";
+import useSweetAlert from "../hooks/useSweetAlert.jsx";
 
 function Login({ isConnected, connectionStatus, onJoinQueue }) {
   const [playerName, setPlayerName] = useState("");
   const [selectedDifficulty, setSelectedDifficulty] = useState("moderate");
   const { enableAudio, startBackgroundMusic, playSound } = useAudio();
-
+  const { showValidationError } = useSweetAlert();
   const handleJoinQueue = () => {
     if (!playerName.trim()) {
-      alert("Please enter your name!");
+      showValidationError("name");
       return;
     }
 

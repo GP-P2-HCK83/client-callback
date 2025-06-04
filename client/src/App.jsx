@@ -4,6 +4,7 @@ import Login from "./pages/Login.jsx";
 import Game from "./pages/Game.jsx";
 import { ThemeProvider } from "./contexts/ThemeContext.jsx";
 import { AudioProvider } from "./contexts/AudioContext.jsx";
+import useSweetAlert from "./hooks/useSweetAlert.jsx";
 import "./App.css";
 
 function AppContent() {
@@ -24,6 +25,10 @@ function AppContent() {
   const [connectionStatus, setConnectionStatus] = useState("Disconnected");
   const [gameBoard, setGameBoard] = useState(null); // Dynamic board from AI
   const [gameDifficulty, setGameDifficulty] = useState("moderate");
+
+  // SweetAlert hook for notifications
+  const { showBoardInfo, showExtraTurn, showPlayerSentBack, showError } =
+    useSweetAlert();
 
   useEffect(() => {
     // Initialize socket connection
@@ -60,12 +65,10 @@ function AppContent() {
       // Set dynamic board if provided
       if (data.board) {
         setGameBoard(data.board);
-        setGameDifficulty(data.difficulty || "moderate");
-
-        // Show notification about board type
+        setGameDifficulty(data.difficulty || "moderate"); // Show notification about board type
         if (data.board.isAIGenerated === false) {
           setTimeout(() => {
-            alert(
+            showBoardInfo(
               "AI board generation failed. Using a preset board for this game."
             );
           }, 1000);
@@ -90,25 +93,19 @@ function AppContent() {
 
       // Handle special game events
       if (data.lastMove) {
-        const { extraTurn, diceValue } = data.lastMove;
-
-        // Show message for rolling 6
+        const { extraTurn, diceValue } = data.lastMove; // Show message for rolling 6
         if (extraTurn && diceValue === 6) {
           setTimeout(() => {
-            alert("You rolled a 6! You get another turn!");
+            showExtraTurn();
           }, 500);
         }
-      }
-
-      // Show message for players sent back to position 1
+      } // Show message for players sent back to position 1
       if (data.playersAffected && data.playersAffected.length > 0) {
         data.playersAffected.forEach((playerId) => {
           const affectedPlayer = data.players[playerId];
           if (affectedPlayer) {
             setTimeout(() => {
-              alert(
-                `Player ${affectedPlayer.playerNumber} was sent back to position 1!`
-              );
+              showPlayerSentBack(affectedPlayer.playerNumber);
             }, 700);
           }
         });
@@ -130,15 +127,13 @@ function AppContent() {
       setConnectionStatus("Opponent disconnected");
       setGameStatus("menu");
     });
-
     newSocket.on("not-your-turn", () => {
-      alert("It's not your turn!");
+      showError("Not Your Turn", "Please wait for your turn to roll the dice!");
     });
-
     return () => {
       newSocket.close();
     };
-  }, []);
+  }, [showBoardInfo, showError, showExtraTurn, showPlayerSentBack]);
 
   const handleJoinQueue = (playerName, selectedDifficulty) => {
     if (socket && isConnected) {
